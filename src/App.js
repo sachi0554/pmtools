@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+
 import './App.css';
-import Header from './shared/header/head'
+ 
+import MainLayout from './components/layout/main'
 
  
 class App extends Component {
   render() {
     return (
-          <Header></Header>
+      <div>
+         <MainLayout/>
+      </div>
+         
     );
   }
 }
