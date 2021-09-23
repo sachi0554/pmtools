@@ -2,7 +2,8 @@ import React, {Component } from 'react';
 import {BrowserRouter as Router, Switch,Route} from "react-router-dom";
 import Navigation from './nav';
 import Dashboard from '../../pages/dashboard/Dashboard';
-import AddProject from '../../pages/project/AddProject';
+import AddProject from '../../pages/project/Create';
+import Details from '../../pages/project/Details';
 
 
 
@@ -23,15 +24,11 @@ class MainLayout extends Component {
             <div id="main">
               <div className="container-fluid">
                 <Switch>
-                  <Route exact path="/add">
-                    <AddProject />
-                  </Route>
-                  <Route path="/">
-                    <Dashboard />
-                  </Route>
+                  <Route exact path="/project/add" component={AddProject}/>
+                  <Route path="/project/:id" component={Details}/>
+                  <Route path="/" component={Dashboard} />
                 </Switch>
               </div>
-
             </div>
           </div>
         </Router>

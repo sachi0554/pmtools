@@ -5,30 +5,33 @@ import '../../assets/css/style.css'
  
  
 class Navigation extends Component {
-    
-      openNav = () => {
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+      constructor(props){
+        super(props)
+        this.state= {isVisible:false}
+        this.toggleBox  = this.toggleBox.bind(this);
       }
-      closeNav = () => {
-        document.getElementById("mySidebar").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
-      }
+     
+      toggleBox = (e) => {
+        e.preventDefault();
+        this.setState(prevState => ({ isVisible: !prevState.isVisible }));
+      };
+       
     
    
     render() {
+      const { isVisible } = this.state;
       return (
         <div>
           <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-dark">
-          <button className="openbtn" onClick={this.openNav}>☰</button>  
+          <button className="openbtn" onClick={ this.toggleBox}>☰</button>  
           <Link to="/" className="navbar-brand">Dashboard</Link>
           <div className="logout">
           <a className="logout-link">Logout</a>
           </div>
           </nav>
           
-        <div id="mySidebar" className="sidebar">
-            <a href="" className="closebtn" onClick={this.closeNav}>×</a>
+        <div id="mySidebar" className={`${isVisible ? "sidebar" : "nodisplay"}`}>
+            <a href="" className="closebtn" onClick={ this.toggleBox}>×</a>
             <a href="#"><i className="bi bi-alarm"></i> About</a>
             <Link to="/add"><i className="bi bi-alarm"></i>Add Project</Link>
 
