@@ -14,7 +14,11 @@
 .logout-link{
     float: right;
 }
+/*  nav border color  */
 
+.bg-dark {
+  background-color: #0477eb!important;
+}
 /*sidebar */
 .nodisplay{
     display: none;
@@ -26,7 +30,7 @@
     z-index: 1;
     top: 56px;
     left: 0;
-    background-color: #111;
+    background-color: #6b8cad;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -58,14 +62,14 @@
   .openbtn {
     font-size: 20px;
     cursor: pointer;
-    background-color: #111;
+    background-color: #8eb4da;
     color: white;
     margin-left: 20px;
     border: none;
   }
   
   .openbtn:hover {
-    background-color: #444;
+    background-color: #0477eb;
   }
   
   #main {
@@ -415,7 +419,7 @@
   margin-bottom: .875rem;
   font-weight: 400;
   color: #fff;
-  background: #212529;
+  background: #0477eb;
   height: 43px;
   line-height: 33px;
   padding-left: 5px;

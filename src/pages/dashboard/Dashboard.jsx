@@ -55,7 +55,7 @@ class Dashboard extends Component {
               </div>
               <div className="widget-49-meeting-points">
                 <div>
-                  <i class="bi bi-tools text-primary me-3"></i><span className="">{item.methodology}</span>
+                  <i className="bi bi-tools text-primary me-3"></i><span className="">{item.methodology}</span>
 
                 </div>
                 <div>

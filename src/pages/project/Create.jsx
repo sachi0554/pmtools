@@ -5,6 +5,8 @@ import {
   FieldControl,
   FieldGroup
 } from "react-reactive-form";
+import { useHistory } from "react-router-dom";
+import { createProject } from '../../core/service/projectservice';
 import TextInput from '../../components/inputComponent/TextInput';
 import SelectBox from '../../components/inputComponent/SelectBox';
 import DatePicker from "react-datepicker";
@@ -26,11 +28,40 @@ class AddProject extends Component {
       description: ""
     });
 
-
+  data = [
+    {
+      name:"India"
+    },
+    {
+      name:"USA"
+    }
+  ]
   onProjectCreate = (e) => {
     e.preventDefault();
-    console.log(this.projectForm.value);
+     
+    let project = this.projectForm.value;
+    project.release_date = this.formatDate(project.release_date)
+    project.start_date = this.formatDate(project.start_date)
+    project.end_date = this.formatDate(project.end_date)
+    createProject(project).then(res => {  
+        if(res){
+          this.props.history.push('/')
+        }
+    })
   }
+  formatDate = (date) => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
   handleStartDateChange = (date) => {
     this.projectForm.controls['start_date'].setValue(date);
@@ -40,6 +71,10 @@ class AddProject extends Component {
   }
   handleReleaseDateChange = (date) => {
     this.projectForm.controls['release_date'].setValue(date);
+  }
+
+  onCancel=()=>{
+    this.props.history.push('/')
   }
   render() {
     return (
@@ -140,8 +175,9 @@ class AddProject extends Component {
                     </div>
 
                     <div className="col-md-12 mt-4">
-                      <button onClick={this.handelCycleModel} type="button" className="btn btn-danger">Cancel</button>  <button type="submit" className="btn btn-success">Create</button>
+                      <button onClick={this.onCancel} type="button" className="btn btn-danger">Cancel</button>  <button type="submit" className="btn btn-success">Create</button>
                     </div>
+                   
                   </form>
                 )} />
               </div>
