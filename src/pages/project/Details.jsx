@@ -22,28 +22,32 @@ import 'react-responsive-modal/styles.css';
 
 import project_mg from '../../assets/images/project.jpg'
 import LineChart from '../../components/charts/LineChart ';
+import BarChart from '../../components/charts/Barchart';
+import PieChart from '../../components/charts/PieChart';
 
 class Details extends Component {
     constructor(props) {
         super(props)
-        this.state = { 
-            projectDetails: [], 
-            isOpen: false, 
-            title: '', 
-            description: '', 
-            projectId: null, 
-            isUserModelOpen: false, 
-            team_id: '', 
+        this.state = {
+            projectDetails: [],
+            isOpen: false,
+            title: '',
+            description: '',
+            projectId: null,
+            isUserModelOpen: false,
+            team_id: '',
             isCycleOpen: false,
-            data:[],
-            label:[],
-            isLineChart:false
-         }
+            data: [],
+            label: [],
+            isLineChart: false,
+            isBarChart:false,
+            isPieChart:false
+        }
 
         this.formatDate = this.formatDate.bind(this)
 
     }
-   
+
     memberForm = FormBuilder.group(
         {
             full_name: ["", Validators.required],
@@ -56,7 +60,7 @@ class Details extends Component {
             end_date: new Date(),
         },
     );
-   
+
     teamForm = FormBuilder.group(
         {
             team_title: ["", Validators.required],
@@ -99,8 +103,8 @@ class Details extends Component {
         let { id } = this.props.match.params
         getProjectDetails(id).then(res => {
             this.setState({ projectDetails: res });
-            this.setState({ data :res.projectcycle.map(item => item.total_story_completed)})
-            this.setState({ label :res.projectcycle.map(item => item.total_story_committed)})
+            // this.setState({ data :res.projectcycle.map(item => item.total_story_completed)})
+            // this.setState({ label :res.projectcycle.map(item => item.total_story_committed)})
         })
     }
     handelModel = () => {
@@ -174,14 +178,34 @@ class Details extends Component {
         })
     }
 
-    onBarChartOpen=()=>{
+    onBarChartOpen = () => {
+        const {projectcycle} = this.state.projectDetails
         this.setState({ isLineChart: !this.state.isLineChart });
+        this.setState({ data : projectcycle.map(item => item.total_story_completed)})
+        this.setState({ label :projectcycle.map(item => item.total_story_committed+" Story")})
+     
+    }
+    isLineChartClose=()=>{
+        this.setState({ isLineChart: !this.state.isLineChart });
+    }
+    isBarChart=()=>{
+        const {projectcycle} = this.state.projectDetails
+        this.setState({ isBarChart: !this.state.isBarChart });
+        this.setState({ data :projectcycle.map(item => item.total_efforts_used)})
+        this.setState({ label :projectcycle.map(item => item.total_efforts+" hours")})
+    }
+
+    isPieChart=()=>{
+        const {projectcycle} = this.state.projectDetails
+        this.setState({ isPieChart: !this.state.isPieChart });
+        this.setState({ data :projectcycle.map(item => item.total_bugs_report_valid_qa)})
+        this.setState({ label :projectcycle.map(item => item.total_bugs_report_qa+" Bugs find valid bug")})
     }
 
 
 
     render() {
-        const {data,label} = this.state
+        const { data, label } = this.state
         let project = this.state.projectDetails;
 
         let teams = project.team !== undefined ?
@@ -366,7 +390,7 @@ class Details extends Component {
                 </div>
             ) : null;
 
-        
+
         return (
 
             <div className="container">
@@ -390,9 +414,9 @@ class Details extends Component {
                                     <div className="profile-designation">Webdeveloper</div>
                                     <p className="profile-description">{project.description}</p>
                                     <ul className="profile-info-list">
-                                        <a onClick={this.onBarChartOpen} className="profile-info-list-item"><i className="mdi mdi-eye"></i>Bar Charts</a>
-                                        <a href="" className="profile-info-list-item"><i className="mdi mdi-bookmark-check"></i>Pie Chart</a>
-                                        <a href="" className="profile-info-list-item"><i className="mdi mdi-movie"></i>Doughnut Chart</a>
+                                        <a onClick={this.onBarChartOpen} className="profile-info-list-item"><i className="mdi mdi-eye"></i>Story Charts</a>
+                                        <a onClick={this.isBarChart} className="profile-info-list-item"><i className="mdi mdi-bookmark-check"></i>Efforts Used Chart</a>
+                                        <a onClick={this.isPieChart} className="profile-info-list-item"><i className="mdi mdi-movie"></i>Bugs Report Chart</a>
                                         <a href="" className="profile-info-list-item"><i className="mdi mdi-account"></i>Statics</a>
 
                                     </ul>
@@ -424,7 +448,7 @@ class Details extends Component {
                             </div>
                         </div>
                     </div>
-                    
+
 
                 </div>
 
@@ -788,11 +812,22 @@ class Details extends Component {
 
                 </Modal>
 
-                <Modal  open={this.state.isLineChart} classNames="bg-secondary shadow" onClose={this.onBarChartOpen} center>
-                    <div>
-                       <LineChart styles={{width:"600px"}} chartData={data} chartLabel={label} ></LineChart> 
+                <Modal open={this.state.isLineChart} classNames="bg-secondary shadow" onClose={this.isLineChartClose} center>
+                    <div style={{width:"650px"}}>
+                        <LineChart  chartData={data} chartLabel={label} ></LineChart>
                     </div>
                 </Modal>
+                <Modal open={this.state.isBarChart} classNames="bg-secondary shadow" onClose={this.isBarChart} center>
+                    <div style={{width:"650px"}}>
+                        <BarChart  chartData={data} chartLabel={label} ></BarChart>
+                    </div>
+                </Modal>
+                <Modal open={this.state.isPieChart} classNames="bg-secondary shadow" onClose={this.isPieChart} center>
+                    <div style={{width:"650px"}}>
+                        <PieChart  chartData={data} chartLabel={label} ></PieChart>
+                    </div>
+                </Modal>
+                
 
             </div>
 

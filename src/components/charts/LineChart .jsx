@@ -11,11 +11,11 @@ class LineChart extends Component {
         this.myRef = React.createRef();
         this.state = {
             data: {
-                labels: [1,3,2],
+                labels: [],
                 datasets: [
                     {
                         label: 'Story',
-                        data: [1,2,1],
+                        data: [],
                         fill: false,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgba(255, 99, 132, 0.2)',
@@ -40,21 +40,23 @@ class LineChart extends Component {
    
 
     componentWillReceiveProps({ chartData, chartLabel }) {
-       
         let data = this.state.data
         data.datasets[0].data = chartData
         data.labels = chartLabel
         this.setState({ data })
     }
+  
     componentDidMount() {
-        console.log(this.myRef); // returns a Chart.js instance reference
+        const {chartData, chartLabel }= this.props
+        let data = this.state.data
+        data.datasets[0].data = chartData
+        data.labels = chartLabel
+        this.setState({ data })
       }
 
     render() {
         const { data, options } = this.state
-        console.log('state data');
-        console.log(data);
-        
+         
         return (
             <Line  ref={this.myRef}  data={data}   key={Math.random()} options={options}    />
         )
