@@ -12,16 +12,28 @@ import '../../assets/css/style.css'
  
  
 class MainLayout extends Component {
+     constructor(props){
+       super(props)
+       this.state= {
+        isVisible:false
+       }
+      //  this.toggleBox  = this.toggleBox.bind(this);
+     }
+
+     toggleBox = (e) => {
+      this.setState(prevState => ({ isVisible: !prevState.isVisible }));
+    };
    
     render() {
+      const {isVisible} = this.state
       return (
         <Router>
           <div>
-            <Navigation>
+            <Navigation navClick={this.toggleBox.bind(this)} show={isVisible}>
 
             </Navigation>
 
-            <div id="main">
+            <div id="main" className={`${isVisible ? "main-half" : "main"}`}>
               <div className="container-fluid">
                 <Switch>
                   <Route exact path="/project/add" component={AddProject}/>

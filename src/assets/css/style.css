@@ -57,11 +57,12 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+    cursor:default;
   }
   
   .openbtn {
     font-size: 20px;
-    cursor: pointer;
+    cursor: default;
     background-color: #8eb4da;
     color: white;
     margin-left: 20px;
@@ -72,12 +73,16 @@
     background-color: #0477eb;
   }
   
-  #main {
+  /* #main {
     transition: margin-left .5s;
     padding: 16px;
     margin-left: 0;
-  }
+  } */
   .main{
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  .main-half{
     transition: margin-left .5s;
     padding: 16px;
     margin-left: 256px;
