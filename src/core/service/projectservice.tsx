@@ -1,5 +1,12 @@
+import { CONSTANT } from "../../constants/constants";
+
+ 
+
+const {REACT_APP_BASE_URL} = process.env
+const { API} = CONSTANT
 export const getProject = () => {
-    return fetch("http://127.0.0.1:8000/api/project/list", {
+  console.log(`${REACT_APP_BASE_URL}${API.Project.list}`)
+    return fetch(`${REACT_APP_BASE_URL}${API.Project.list}`, {
         "method": "GET",
         "headers": {
           "Content-type": "Application/json",

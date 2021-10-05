@@ -103,7 +103,7 @@ class AddProject extends Component {
                           name="methodology"
                           render={SelectBox}
                           meta={{
-                            label: "Working Hours",
+                            label: "methodology",
                             placeholder: "Enter first name",
                             values: ["Agile", "Scrum", "WaterFall"]
                           }}
